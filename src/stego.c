@@ -5,10 +5,20 @@ const int mask = 254;
 
 void insert(char c, int W, int H, struct pixel image[H][W], FILE *key) {
 	int code = 0;
-	if ('A' <= c && c <= 'Z') code = c - 'A';
-	if (c == ' ') code = 26;
-	if (c == '.') code = 27;
-	if (c == ',') code = 28;
+	switch (c) {
+		case ' ':
+			code = 26;
+			break;
+		case '.':
+			code = 27;
+			break;
+		case ',':
+			code = 28;
+			break;
+		default:
+			code = c - 'A';
+			break;
+	}
 	
 	for (int i = 0; i < 5; i++) {
 		int bit = 0;
@@ -54,9 +64,14 @@ char extract(int W, int H, struct pixel image[H][W], FILE *key) {
 		
 		code += (1 << i) * bit;
 	}
-	if (code < 26) return code + 'A';
-	if (code == 26) return ' ';
-	if (code == 27) return '.';
-	if (code == 28) return ',';
-	return '\0';
+	switch (code) {
+		case 26:
+			return ' ';
+		case 27:
+			return '.';
+		case 28:
+			return ',';
+		default:
+			return code + 'A';
+	}
 }

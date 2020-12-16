@@ -3,10 +3,10 @@
 #include <string.h>
 
 void load_bmp(int W, int H, FILE *input_file, struct pixel dest[H][W]) {
-	struct pixel buf[W % 4];
+	char buf[W % 4];
 	for (int h = 0; h < H; h++) {
 		fread(dest[h], sizeof(struct pixel), W, input_file);
-		fread(buf, sizeof(struct pixel), W % 4, input_file);
+		fread(buf, sizeof(char), W % 4, input_file);
 	}
 }
 
@@ -30,8 +30,8 @@ void rotate(int W, int H, struct pixel src[H][W], struct pixel dest[W][H]) {
 }
 
 void save_bmp(int W, int H, FILE *output_file, struct bmp_header *header, struct bmp_info *info, struct pixel src[H][W]) {
-	struct pixel buf[W % 4];
-	for (int i = 0; i < W % 4; i++) buf[i].r = buf[i].g = buf[i].b = 0;
+	char buf[W % 4];
+	for (int i = 0; i < W % 4; i++) buf[i] = 0;
 	header->bf_size = sizeof(struct bmp_header) + sizeof(struct bmp_info) + sizeof(*src) + H * sizeof(*buf);
 	info->bi_width = W;
 	info->bi_height = H;

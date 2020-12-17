@@ -31,7 +31,7 @@ void rotate(int W, int H, struct pixel src[H][W], struct pixel dest[W][H]) {
 
 void save_bmp(int W, int H, FILE *output_file, struct bmp_header *header, struct bmp_info *info, struct pixel src[H][W]) {
 	char buf[W % 4];
-	for (int i = 0; i < W % 4; i++) buf[i] = 0;
+	memset(buf, 0, sizeof(buf));
 	header->bf_size = sizeof(struct bmp_header) + sizeof(struct bmp_info) + sizeof(*src) + H * sizeof(*buf);
 	info->bi_width = W;
 	info->bi_height = H;

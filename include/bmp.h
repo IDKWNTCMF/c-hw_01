@@ -19,7 +19,7 @@ struct bmp_info {
 };
 
 struct pixel {
-	char r, g, b;
+	char b, g, r;
 };
 
 #pragma pack(pop)

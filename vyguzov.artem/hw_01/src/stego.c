@@ -29,14 +29,18 @@ void insert(char c, int H, struct pixel * * image, FILE *key) {
 		if (fscanf(key, "%d %d %c", &x, &y, &colour) != 3) return;
 		int correct_y = H - 1 - y;
 		
-		if (colour == 'R') {
-			if (bit == 0) image[correct_y][x].r &= mask; else image[correct_y][x].r |= 1;
-		}
-		if (colour == 'G') {
-			if (bit == 0) image[correct_y][x].g &= mask; else image[correct_y][x].g |= 1;
-		}
-		if (colour == 'B') {
-			if (bit == 0) image[correct_y][x].b &= mask; else image[correct_y][x].b |= 1;
+		switch (colour) {
+			case 'R':
+				if (bit == 0) image[correct_y][x].r &= mask; else image[correct_y][x].r |= 1;
+				break;
+			case 'G':
+				if (bit == 0) image[correct_y][x].g &= mask; else image[correct_y][x].g |= 1;
+				break;
+			case 'B':
+				if (bit == 0) image[correct_y][x].b &= mask; else image[correct_y][x].b |= 1;
+				break;
+			default:
+				return;
 		}
 	}
 }
@@ -52,14 +56,18 @@ char extract(int H, struct pixel * * image, FILE *key) {
 		int correct_y = H - 1 - y;
 		int bit = 0;
 		
-		if (colour == 'R') {
-			bit = (image[correct_y][x].r & 1);
-		}
-		if (colour == 'G') {
-			bit = (image[correct_y][x].g & 1);
-		}
-		if (colour == 'B') {
-			bit = (image[correct_y][x].b & 1);
+		switch (colour) {
+			case 'R':
+				bit = (image[correct_y][x].r & 1);
+				break;
+			case 'G':
+				bit = (image[correct_y][x].g & 1);
+				break;
+			case 'B':
+				bit = (image[correct_y][x].b & 1);
+				break;
+			default:
+				return '\0';
 		}
 		
 		code += (1 << i) * bit;

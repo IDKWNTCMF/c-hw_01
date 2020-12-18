@@ -3,7 +3,7 @@
 
 const int mask = 254;
 
-void insert(char c, int W, int H, struct pixel image[H][W], FILE *key) {
+void insert(char c, int H, struct pixel * * image, FILE *key) {
 	int code = 0;
 	switch (c) {
 		case ' ':
@@ -41,7 +41,7 @@ void insert(char c, int W, int H, struct pixel image[H][W], FILE *key) {
 	}
 }
 
-char extract(int W, int H, struct pixel image[H][W], FILE *key) {
+char extract(int H, struct pixel * * image, FILE *key) {
 	int code = 0;
 	for (int i = 0; i < 5; i++) {
 		int x, y;

@@ -24,10 +24,10 @@ struct pixel {
 
 #pragma pack(pop)
 
-void load_bmp(int W, int H, FILE *input_file, struct pixel dest[H][W]);
+void load_bmp(int W, int H, FILE *input_file, struct pixel * * dest);
 
-void crop(int x, int y, int W, int H, int w, int h, struct pixel src[H][W], struct pixel dest[h][w]);
+void crop(int x, int y, int W, int H, int w, int h, struct pixel * * src, struct pixel * * dest);
 
-void rotate(int W, int H, struct pixel src[H][W], struct pixel dest[W][H]);
+void rotate(int W, int H, struct pixel * * src, struct pixel * * dest);
 
-void save_bmp(int W, int H, FILE *output_file, struct bmp_header *header, struct bmp_info *info, struct pixel src[H][W]);
+void save_bmp(int W, int H, FILE *output_file, struct bmp_header *header, struct bmp_info *info, struct pixel * * src);

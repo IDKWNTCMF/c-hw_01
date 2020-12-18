@@ -114,7 +114,7 @@ int main(int argc, char * * argv) {
 		}
 		
 		char ch;
-		while (fscanf(message, "%c", &ch) != -1) {
+		while (fscanf(message, "%c", &ch) != -1 && ch != '\n') {
 			insert(ch, H, image, key);
 		}
 		
@@ -149,6 +149,7 @@ int main(int argc, char * * argv) {
 			fprintf(message, "%c", ch);
 			ch = extract(H, image, key);
 		}
+		fprintf(message, "\n");
 		free_array_of_pixels(image);
 		
 		fclose(key);

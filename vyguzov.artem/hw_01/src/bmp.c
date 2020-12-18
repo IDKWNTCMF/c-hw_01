@@ -39,6 +39,6 @@ void save_bmp(int W, int H, FILE *output_file, struct bmp_header *header, struct
 	fwrite(info, sizeof(struct bmp_info), 1, output_file);
 	for (int h = 0; h < H; h++) {
 		fwrite(src[h], sizeof(struct pixel), W, output_file);
-		fwrite(buf, sizeof(struct pixel), W % 4, output_file);
+		fwrite(buf, sizeof(char), W % 4, output_file);
 	} 
 }

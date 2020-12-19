@@ -26,7 +26,7 @@ struct pixel {
 
 void load_bmp(int W, int H, FILE *input_file, struct pixel * * dest);
 
-void crop(int x, int y, int W, int H, int w, int h, struct pixel * * src, struct pixel * * dest);
+void crop(int x, int y, int w, int h, struct pixel * * src, struct pixel * * dest);
 
 void rotate(int W, int H, struct pixel * * src, struct pixel * * dest);
 

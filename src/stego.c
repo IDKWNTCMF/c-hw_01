@@ -3,7 +3,7 @@
 
 const int mask = 254;
 
-void insert(char c, int H, struct pixel * * image, FILE *key) {
+void insert(char c, struct pixel * * image, FILE *key) {
 	int code = 0;
 	switch (c) {
 		case ' ':
@@ -27,17 +27,16 @@ void insert(char c, int H, struct pixel * * image, FILE *key) {
 		int x, y;
 		char colour;
 		if (fscanf(key, "%d %d %c", &x, &y, &colour) != 3) return;
-		int correct_y = H - 1 - y;
 		
 		switch (colour) {
 			case 'R':
-				if (bit == 0) image[correct_y][x].r &= mask; else image[correct_y][x].r |= 1;
+				if (bit == 0) image[y][x].r &= mask; else image[y][x].r |= 1;
 				break;
 			case 'G':
-				if (bit == 0) image[correct_y][x].g &= mask; else image[correct_y][x].g |= 1;
+				if (bit == 0) image[y][x].g &= mask; else image[y][x].g |= 1;
 				break;
 			case 'B':
-				if (bit == 0) image[correct_y][x].b &= mask; else image[correct_y][x].b |= 1;
+				if (bit == 0) image[y][x].b &= mask; else image[y][x].b |= 1;
 				break;
 			default:
 				return;
@@ -45,7 +44,7 @@ void insert(char c, int H, struct pixel * * image, FILE *key) {
 	}
 }
 
-char extract(int H, struct pixel * * image, FILE *key) {
+char extract(struct pixel * * image, FILE *key) {
 	int code = 0;
 	for (int i = 0; i < 5; i++) {
 		int x, y;
@@ -53,18 +52,17 @@ char extract(int H, struct pixel * * image, FILE *key) {
 		if (fscanf(key, "%d %d %c", &x, &y, &colour) != 3) {
 			return '\0';
 		}
-		int correct_y = H - 1 - y;
 		int bit = 0;
 		
 		switch (colour) {
 			case 'R':
-				bit = (image[correct_y][x].r & 1);
+				bit = (image[y][x].r & 1);
 				break;
 			case 'G':
-				bit = (image[correct_y][x].g & 1);
+				bit = (image[y][x].g & 1);
 				break;
 			case 'B':
-				bit = (image[correct_y][x].b & 1);
+				bit = (image[y][x].b & 1);
 				break;
 			default:
 				return '\0';

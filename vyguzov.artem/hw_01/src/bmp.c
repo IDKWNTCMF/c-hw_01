@@ -4,8 +4,8 @@
 
 void load_bmp(int W, int H, FILE *input_file, struct pixel * * dest) {
 	char buf[W % 4];
-	for (int h = 0; h < H; h++) {
-		fread(dest[H - 1 - h], sizeof(struct pixel), W, input_file);
+	for (int h = H - 1; h >= 0; h--) {
+		fread(dest[h], sizeof(struct pixel), W, input_file);
 		fread(buf, sizeof(char), W % 4, input_file);
 	}
 }
@@ -33,8 +33,8 @@ void save_bmp(int W, int H, FILE *output_file, struct bmp_header *header, struct
 	info->bi_height = H;
 	fwrite(header, sizeof(struct bmp_header), 1, output_file);
 	fwrite(info, sizeof(struct bmp_info), 1, output_file);
-	for (int h = 0; h < H; h++) {
-		fwrite(src[H - 1 - h], sizeof(struct pixel), W, output_file);
+	for (int h = H - 1; h >= 0; h--) {
+		fwrite(src[h], sizeof(struct pixel), W, output_file);
 		fwrite(buf, sizeof(char), W % 4, output_file);
 	} 
 }

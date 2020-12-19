@@ -70,7 +70,7 @@ int main(int argc, char * * argv) {
 			return 3;
 		}
 		
-		crop(x, y, W, H, w, h, image, cropped);
+		crop(x, y, w, h, image, cropped);
 		free_array_of_pixels(image);
 		
 		int rotated_w = h, rotated_h = w;
@@ -115,7 +115,7 @@ int main(int argc, char * * argv) {
 		
 		char ch;
 		while (fscanf(message, "%c", &ch) != -1 && ch != '\n') {
-			insert(ch, H, image, key);
+			insert(ch, image, key);
 		}
 		
 		save_bmp(W, H, output_file, &header, &info, image);
@@ -144,10 +144,10 @@ int main(int argc, char * * argv) {
 			return 6;
 		}
 		
-		char ch = extract(H, image, key);
+		char ch = extract(image, key);
 		while (ch != '\0') {
 			fprintf(message, "%c", ch);
-			ch = extract(H, image, key);
+			ch = extract(image, key);
 		}
 		fprintf(message, "\n");
 		free_array_of_pixels(image);

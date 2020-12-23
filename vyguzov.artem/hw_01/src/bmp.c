@@ -71,9 +71,10 @@ void save_bmp(int W, int H, FILE *output_file, struct bmp_header *header, struct
 	char buf[buf_sz];
 	memset(buf, 0, buf_sz);
 	
-	header->bf_size = sizeof(struct bmp_header) + sizeof(struct bmp_info) + H * W * sizeof(struct pixel) + H * buf_sz;
 	info->bi_width = W;
 	info->bi_height = H;
+	info->bi_size_image = H * W * sizeof(struct pixel) + H * buf_sz;
+	header->bf_size = sizeof(struct bmp_header) + sizeof(struct bmp_info) + info->bi_size_image;
 	
 	fwrite(header, sizeof(struct bmp_header), 1, output_file);
 	fwrite(info, sizeof(struct bmp_info), 1, output_file);

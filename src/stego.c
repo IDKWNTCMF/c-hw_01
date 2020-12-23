@@ -2,6 +2,8 @@
 #include "bmp.h"
 
 const int mask = 254;
+const int number_of_bits = 5;
+const int required_number_of_args = 3;
 
 void insert(char c, struct pixel * * image, FILE *key) {
 	int code = 0;
@@ -20,13 +22,13 @@ void insert(char c, struct pixel * * image, FILE *key) {
 			break;
 	}
 	
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < number_of_bits; i++) {
 		int bit = 0;
 		if ((code & (1 << i)) != 0) bit = 1;
 		
 		int x, y;
 		char colour;
-		if (fscanf(key, "%d %d %c", &x, &y, &colour) != 3) return;
+		if (fscanf(key, "%d %d %c", &x, &y, &colour) != required_number_of_args) return;
 		
 		switch (colour) {
 			case 'R':
@@ -46,10 +48,10 @@ void insert(char c, struct pixel * * image, FILE *key) {
 
 char extract(struct pixel * * image, FILE *key) {
 	int code = 0;
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < number_of_bits; i++) {
 		int x, y;
 		char colour;
-		if (fscanf(key, "%d %d %c", &x, &y, &colour) != 3) {
+		if (fscanf(key, "%d %d %c", &x, &y, &colour) != required_number_of_args) {
 			return '\0';
 		}
 		int bit = 0;

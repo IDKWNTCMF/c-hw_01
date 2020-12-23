@@ -51,6 +51,7 @@ int main(int argc, char * * argv) {
 		
 		int x = strtol(argv[4], NULL, base), y = strtol(argv[5], NULL, base);
 		int w = strtol(argv[6], NULL, base), h = strtol(argv[7], NULL, base);
+		int rotated_w = h, rotated_h = w;
 		
 		struct pixel * * cropped = crop(x, y, w, h, image);
 		if (cropped == NULL) return 1;
@@ -58,7 +59,7 @@ int main(int argc, char * * argv) {
 		struct pixel * * rotated = rotate(w, h, cropped);
 		if (rotated == NULL) return 1;
 		
-		save_bmp(h, w, output_file, &header, &info, rotated);
+		save_bmp(rotated_w, rotated_h, output_file, &header, &info, rotated);
 		fclose(output_file);
 	}
 	

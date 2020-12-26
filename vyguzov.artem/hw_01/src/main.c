@@ -10,10 +10,6 @@ const int files_for_crop_rotate = 8;
 const int files_for_insert = 6;
 const int files_for_extract = 5;
 
-void free_array_of_pixels(struct pixel * * array) {
-	free(array);
-}
-
 int main(int argc, char * * argv) {
 	if (argc < files_for_extract) {
 		printf("Wrong number of arguments!\n");
@@ -27,10 +23,9 @@ int main(int argc, char * * argv) {
 		return 1;
 	}
 	
-	struct bmp_header header;
-	struct bmp_info info;
+	struct bmp_all all;
 	
-	struct pixel * * image = load_bmp(&header, &info, input_file);
+	struct pixel * * image = load_bmp(&all, input_file);
 	if (image == NULL) return 1;
 	fclose(input_file);
 	
@@ -59,7 +54,7 @@ int main(int argc, char * * argv) {
 		struct pixel * * rotated = rotate(w, h, cropped);
 		if (rotated == NULL) return 1;
 		
-		save_bmp(rotated_w, rotated_h, output_file, &header, &info, rotated);
+		save_bmp(rotated_w, rotated_h, output_file, &all, rotated);
 		fclose(output_file);
 	}
 	
@@ -95,8 +90,8 @@ int main(int argc, char * * argv) {
 			insert(ch, image, key);
 		}
 		
-		int W = info.bi_width, H = info.bi_height;
-		save_bmp(W, H, output_file, &header, &info, image);
+		int W = all.info.bi_width, H = all.info.bi_height;
+		save_bmp(W, H, output_file, &all, image);
 		
 		fclose(key);
 		fclose(message);

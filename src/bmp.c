@@ -24,12 +24,9 @@ void free_array_of_pixels(struct pixel * * array) {
 }
 
 struct pixel * * load_bmp(struct bmp_all *all, FILE *input_file) {
-	struct bmp_header *header = &(all->header);
-	struct bmp_info *info = &(all->info);
-	fread(header, sizeof(struct bmp_header), 1, input_file);
-	fread(info, sizeof(struct bmp_info), 1, input_file);
-	
-	int W = info->bi_width, H = info->bi_height;
+	fread(all, sizeof(struct bmp_all), 1, input_file);
+
+	int W = all->info.bi_width, H = all->info.bi_height;
 	struct pixel * * image = make_array_of_pixels(W, H);
 	if (image == NULL) return NULL;
 	
@@ -73,19 +70,16 @@ struct pixel * * rotate(int W, int H, struct pixel * * src) {
 }
 
 void save_bmp(int W, int H, FILE *output_file, struct bmp_all *all, struct pixel * * src) {
-	struct bmp_header *header = &(all->header);
-	struct bmp_info *info = &(all->info);
 	int buf_sz = W % required_number_of_bytes;
 	char buf[buf_sz];
 	memset(buf, 0, buf_sz);
 	
-	info->bi_width = W;
-	info->bi_height = H;
-	info->bi_size_image = H * W * sizeof(struct pixel) + H * buf_sz;
-	header->bf_size = sizeof(struct bmp_all) + info->bi_size_image;
+	all->info.bi_width = W;
+	all->info.bi_height = H;
+	all->info.bi_size_image = H * W * sizeof(struct pixel) + H * buf_sz;
+	all->header.bf_size = sizeof(struct bmp_all) + all->info.bi_size_image;
 	
-	fwrite(header, sizeof(struct bmp_header), 1, output_file);
-	fwrite(info, sizeof(struct bmp_info), 1, output_file);
+	fwrite(all, sizeof(struct bmp_all), 1, output_file);
 	for (int h = H - 1; h >= 0; h--) {
 		fwrite(src[h], sizeof(struct pixel), W, output_file);
 		fwrite(buf, sizeof(char), buf_sz, output_file);
